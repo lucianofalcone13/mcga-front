@@ -16,12 +16,17 @@ class TaskList extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    componentDidMount() {
+        this.props.fetchTasks()
+    }
+
     renderList() {
         return (
             <ul className={css.listContainer}>
+                {console.log(this.props.list)}
                 {
-                    this.state.list.map((task) =>
-                        <Task key={task.id} id={task.id} description={task.description}/>
+                    this.props.list.map((task, idx) =>
+                        <Task key={`${task._id}-idx`} id={task._id} description={task.description}/>
                     )
                 }
             </ul>
