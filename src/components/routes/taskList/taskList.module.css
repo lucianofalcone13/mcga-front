@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.listContainer {
+    max-width: 1260px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inputContainer {
+    display: flex;
+}
