@@ -7,21 +7,19 @@ import css from './taskList.module.css'
 class TaskList extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            list: [{ id: '1', description: 'Descripcion_1' },
-            { id: '2', description: 'Descripcion_1' },
-            { id: '3', description: 'Descripcion_1' }],
-            value: ''
-        }
         this.handleChange = this.handleChange.bind(this)
+    }
+
+    componentDidMount() {
+        this.props.fetchTasks()
     }
 
     renderList() {
         return (
             <ul className={css.listContainer}>
                 {
-                    this.state.list.map((task) =>
-                        <Task key={task.id} id={task.id} description={task.description}/>
+                    this.props.list.map((task) =>
+                        <Task key={task._id} id={task._id} description={task.description}/>
                     )
                 }
             </ul>

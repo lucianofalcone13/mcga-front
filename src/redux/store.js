@@ -4,6 +4,6 @@ import { TaskReducer } from "./reducers";
 import { apiUrl } from "./constants";
 
 export const store = createStore(
-  combineReducers({ task: TaskReducer }),
+  combineReducers({ tasks: TaskReducer }),
   applyMiddleware(thunk.withExtraArgument({ apiUrl }))
 );
