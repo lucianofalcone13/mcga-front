@@ -37,7 +37,7 @@ class TaskList extends React.Component {
         return (
             <div className={css.container}>
                 <div className={css.inputContainer}>
-                    <TextField value={this.state.value} onChange={this.handleChange} />
+                    <TextField value={this.state.value} onChange={this.handleChange} placeholder="Add a new task" />
                     <Button type="disabled" size="medium">ADD</Button>
                 </div>
                 {this.renderList()}

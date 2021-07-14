@@ -5,6 +5,11 @@
     outline: none;
     border: 1px solid;
     background-color: transparent;
+    margin: 0px 0px 0px 10px;
+}
+
+.button:disabled {
+    opacity: 0.5;
 }
 
 .add {
@@ -21,10 +26,6 @@
     border-color: #cf6679;
     background-color: #cf6679;
     color: #1e1e1e;
-}
-
-.disabled {
-    background-color: lightgray;
 }
 
 .icon {
