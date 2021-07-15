@@ -1,11 +1,21 @@
-.item {
+.item, .selected {
     display: flex;
     align-items: center;
     width: 100%;
     margin: 10px 0px;
-    background-color: #3e3e42;
+    background-color: #2d2d30;
     border-radius: 7px;
     padding: 10px;
+    height: 26px;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: #3e3e42;
+}
+
+.selected {
+    background-color: #3e3e42;
 }
 
 .description {
