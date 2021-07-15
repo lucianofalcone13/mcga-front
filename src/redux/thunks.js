@@ -19,7 +19,7 @@ export const addTask =
   async (dispatch, _getState, { apiUrl }) => {
     try {
       dispatch(addTaskPending());
-      const { data: response } = await axios.post(apiUrl, data);
+      const { data: response } = await axios.post(`${apiUrl}/tasks/add`, data);
       if (response.success) {
         dispatch(addTaskFulfilled(response.data));
       } else {

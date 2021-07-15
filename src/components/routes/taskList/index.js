@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchTasks, editTask, deleteTask } from "../../../redux/thunks";
+import { addTask, fetchTasks, editTask, deleteTask } from "../../../redux/thunks";
 import TaskList from "./taskList";
 
 const mapStateToProps = (state) => ({
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchTasks,
     editTask,
-    deleteTask
+    deleteTask,
+    addTask
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
