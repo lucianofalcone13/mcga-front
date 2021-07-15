@@ -1,20 +1,21 @@
-import React from "react";
-import Button from "../../shared-components/button/button";
-import { TextField } from "../../shared-components/input/textField";
-import Task from "./task";
-import css from "./taskList.module.css";
+import React from "react"
+import Button from "../../shared-components/button/button"
+import { TextField } from "../../shared-components/input/textField"
+import { Overlay } from "../../shared-components/overlay/overlay"
+import Task from "./task"
+import css from "./taskList.module.css"
 
 class TaskList extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.resetForm = this.resetForm.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.resetForm = this.resetForm.bind(this)
     this.state = {
       value: "",
-      editing: undefined,
+      editing: undefined
     };
   }
 
@@ -24,22 +25,20 @@ class TaskList extends React.Component {
   }
 
   handleEdit(id, value) {
-    this.setState({
-      editing: id,
-    });
-    this.setState({ value });
+    this.setState({ editing: id })
+    this.setState({ value })
   }
 
   handleDelete(id) {
-    console.log("handle delete");
+    console.log("handle delete")
   }
   renderList() {
-    const { list } = this.props;
+    const { list } = this.props
 
     return (
       <ul className={css.listContainer}>
         {list.map((task) => {
-          const { _id, description } = task;
+          const { _id, description } = task
           return (
             <Task
               key={_id}
@@ -77,9 +76,12 @@ class TaskList extends React.Component {
   }
 
   render() {
-    const { value, editing } = this.state;
+    const { value, editing } = this.state
+    const { isLoading, error } = this.props
     return (
       <div className={css.container}>
+        {isLoading && <Overlay message="Loading" />}
+        {!!error && <Overlay message={error} />}
         <form className={css.formContainer} onSubmit={this.handleSubmit}>
           <TextField
             value={this.state.value}
