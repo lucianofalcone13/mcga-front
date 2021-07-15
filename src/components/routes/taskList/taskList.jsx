@@ -1,4 +1,6 @@
 import React from "react";
+import { AddIcon } from "../../../assets/icons";
+import { CheckmarkIcon } from "../../../assets/icons";
 import Button from "../../shared-components/button/button";
 import { TextField } from "../../shared-components/input/textField";
 import { Overlay } from "../../shared-components/overlay/overlay";
@@ -14,7 +16,7 @@ class TaskList extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTaskClick = this.handleTaskClick.bind(this);
     this.resetForm = this.resetForm.bind(this);
-    this.inputRef = React.createRef(null)
+    this.inputRef = React.createRef(null);
     this.state = {
       value: "",
       editing: undefined,
@@ -29,7 +31,7 @@ class TaskList extends React.Component {
 
   handleEdit(id, value) {
     if (this.inputRef.current) {
-      this.inputRef.current.focus()
+      this.inputRef.current.focus();
     }
     this.setState({ editing: id });
     this.setState({ value });
@@ -85,9 +87,9 @@ class TaskList extends React.Component {
     e.persist();
     e.preventDefault();
     if (!!editing) {
-      editTask(editing, value)
+      editTask(editing, value);
     } else {
-      addTask({ description: value })
+      addTask({ description: value });
     }
     this.resetForm();
   }
@@ -96,23 +98,31 @@ class TaskList extends React.Component {
     const { value, editing } = this.state;
     const { isLoading, error } = this.props;
     return (
-      <div className={css.container}>
-        {isLoading && <Overlay message="Loading" />}
-        {!!error && <Overlay message={error} />}
-        <form className={css.formContainer} onSubmit={this.handleSubmit}>
-          <TextField
-            inputRef={this.inputRef}
-            value={this.state.value}
-            onChange={this.handleChange}
-            placeholder="Add a new task"
-            required
-          />
-          <Button type="submit" size="medium" disabled={!!!value}>
-            {editing ? "EDIT" : "ADD"}
-          </Button>
-        </form>
-        {this.renderList()}
-      </div>
+      <>
+        <div className={css.container}>
+          {!!error && <Overlay message={error} />}
+          {isLoading && <Overlay message="Loading..." />}
+          <form className={css.formContainer} onSubmit={this.handleSubmit}>
+            <TextField
+              inputRef={this.inputRef}
+              value={this.state.value}
+              onChange={this.handleChange}
+              placeholder="Add a new task"
+              required
+            />
+            <Button
+              style={{marginTop: '1px'}}
+              type="submit"
+              size="small"
+              disabled={!!!value}
+              icon={editing ? <CheckmarkIcon /> : <AddIcon />}
+            >
+              {editing ? "EDIT" : "ADD"}
+            </Button>
+          </form>
+          {this.renderList()}
+        </div>
+      </>
     );
   }
 }

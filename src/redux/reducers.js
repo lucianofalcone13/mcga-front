@@ -36,7 +36,6 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
         list: [...state.list, action.payload],
       };
     case DELETE_TASK_FULFILLED:
-      console.log(action.payload)
       const idx = state.list.findIndex((t) => t._id === action.payload._id)
       const updatedList = [...state.list]
       if (idx !== -1) {

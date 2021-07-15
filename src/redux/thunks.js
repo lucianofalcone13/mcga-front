@@ -37,7 +37,6 @@ export const fetchTasks =
       dispatch(fetchTasksPending());
       const { data: response } = await axios.get(`${apiUrl}/tasks`);
       if (response.success) {
-        console.log(response)
         dispatch(fetchTasksFulfilled(response.data));
       } else {
         dispatch(fetchTasksRejected(response.message));

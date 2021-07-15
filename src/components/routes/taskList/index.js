@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { addTask, fetchTasks, editTask, deleteTask } from "../../../redux/thunks";
 import TaskList from "./taskList";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     list: state.tasks.list,
     error: state.tasks.error,
     isLoading: state.tasks.isLoading
