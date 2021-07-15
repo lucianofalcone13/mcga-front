@@ -7,7 +7,10 @@ import {
   FETCH_TASKS_FULFILLED,
   EDIT_TASK_PENDING,
   EDIT_TASK_REJECTED,
-  EDIT_TASK_FULFILLED
+  EDIT_TASK_FULFILLED,
+  DELETE_TASK_FULFILLED,
+  DELETE_TASK_REJECTED,
+  DELETE_TASK_PENDING,
 } from "./constants";
 
 const INITIAL_STATE = {
@@ -18,6 +21,8 @@ const INITIAL_STATE = {
 
 export const TaskReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_TASKS_PENDING:
+    case DELETE_TASK_PENDING:
     case EDIT_TASK_PENDING:
     case ADD_TASK_PENDING:
       return {
@@ -30,12 +35,12 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         list: [...state.list, action.payload],
       };
-    case EDIT_TASK_FULFILLED:
+    case DELETE_TASK_FULFILLED:
       console.log(action.payload)
       const idx = state.list.findIndex((t) => t._id === action.payload._id)
       const updatedList = [...state.list]
       if (idx !== -1) {
-        updatedList.splice(idx, 1, {...action.payload})
+        updatedList.splice(idx, 1)
         return {
           ...state,
           isLoading: false,
@@ -45,14 +50,26 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
         return {
           ...state,
           isLoading: false,
+          error: `An error has occurred while removing the task: ${action.payload._id}`
+        }
+      }
+    case EDIT_TASK_FULFILLED:
+      const index = state.list.findIndex((t) => t._id === action.payload._id)
+      const editedList = [...state.list]
+      if (index !== -1) {
+        editedList.splice(index, 1, {...action.payload})
+        return {
+          ...state,
+          isLoading: false,
+          list: editedList
+        };
+      } else {
+        return {
+          ...state,
+          isLoading: false,
           error: `An error has occurred while editing the task: ${action.payload._id}`
         }
       }
-    case FETCH_TASKS_PENDING:
-      return {
-        ...state,
-        isLoading: true,
-      };
     case FETCH_TASKS_FULFILLED:
       return {
         ...state,
@@ -62,6 +79,7 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
     case ADD_TASK_REJECTED:
     case EDIT_TASK_REJECTED:
     case FETCH_TASKS_REJECTED:
+    case DELETE_TASK_REJECTED:
       return {
         ...state,
         isLoading: false,

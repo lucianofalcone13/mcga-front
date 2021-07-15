@@ -8,7 +8,10 @@ import {
   fetchTasksRejected,
   editTaskFulfilled,
   editTaskRejected,
-  editTaskPending
+  editTaskPending,
+  deleteTaskFulfilled,
+  deleteTaskRejected,
+  deleteTaskPending,
 } from "./actions";
 
 export const addTask =
@@ -18,7 +21,7 @@ export const addTask =
       dispatch(addTaskPending());
       const { data: response } = await axios.post(apiUrl, data);
       if (response.success) {
-        dispatch(addTaskFulfilled(response.list));
+        dispatch(addTaskFulfilled(response.data));
       } else {
         dispatch(addTaskRejected(response.message));
       }
@@ -34,6 +37,7 @@ export const fetchTasks =
       dispatch(fetchTasksPending());
       const { data: response } = await axios.get(`${apiUrl}/tasks`);
       if (response.success) {
+        console.log(response)
         dispatch(fetchTasksFulfilled(response.data));
       } else {
         dispatch(fetchTasksRejected(response.message));
@@ -48,7 +52,10 @@ export const editTask =
   async (dispatch, _getState, { apiUrl }) => {
     try {
       dispatch(editTaskPending());
-      const { data: response } = await axios.put(`${apiUrl}/tasks/edit/${id}`, {id: id, description: value});
+      const { data: response } = await axios.put(`${apiUrl}/tasks/edit/${id}`, {
+        id: id,
+        description: value,
+      });
       if (response.success) {
         dispatch(editTaskFulfilled(response.data));
       } else {
@@ -56,5 +63,22 @@ export const editTask =
       }
     } catch (error) {
       dispatch(editTaskRejected(error.message));
+    }
+  };
+
+export const deleteTask =
+  (id) =>
+  async (dispatch, _getState, { apiUrl }) => {
+    try {
+      dispatch(deleteTaskPending());
+      console.log(`${apiUrl}/tasks/${id}`);
+      const { data: response } = await axios.delete(`${apiUrl}/tasks/${id}`);
+      if (response.success) {
+        dispatch(deleteTaskFulfilled(response.data));
+      } else {
+        dispatch(deleteTaskRejected(response.message));
+      }
+    } catch (error) {
+      dispatch(deleteTaskRejected(error.message));
     }
   };

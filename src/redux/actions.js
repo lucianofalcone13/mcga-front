@@ -8,6 +8,9 @@ import {
   EDIT_TASK_FULFILLED,
   EDIT_TASK_REJECTED,
   EDIT_TASK_PENDING,
+  DELETE_TASK_FULFILLED,
+  DELETE_TASK_REJECTED,
+  DELETE_TASK_PENDING,
 } from "./constants";
 
 export const addTaskPending = () => ({
@@ -49,5 +52,19 @@ export const editTaskFulfilled = (payload) => ({
 
 export const editTaskRejected = (err) => ({
   type: EDIT_TASK_REJECTED,
+  error: err,
+});
+
+export const deleteTaskPending = () => ({
+  type: DELETE_TASK_PENDING,
+});
+
+export const deleteTaskFulfilled = (payload) => ({
+  type: DELETE_TASK_FULFILLED,
+  payload: payload,
+});
+
+export const deleteTaskRejected = (err) => ({
+  type: DELETE_TASK_REJECTED,
   error: err,
 });

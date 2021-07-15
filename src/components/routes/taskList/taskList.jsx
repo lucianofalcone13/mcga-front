@@ -30,7 +30,9 @@ class TaskList extends React.Component {
   }
 
   handleDelete(id) {
-    console.log("handle delete")
+    const { deleteTask } = this.props;
+    console.log(id)
+    deleteTask(id)
   }
   renderList() {
     const { list } = this.props
@@ -44,7 +46,7 @@ class TaskList extends React.Component {
               key={_id}
               id={_id}
               description={description}
-              onDelete={this.handleDelete}
+              onDelete={() => this.handleDelete(_id)}
               onEdit={() => this.handleEdit(_id, description)}
             />
           );
