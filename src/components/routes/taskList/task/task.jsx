@@ -11,8 +11,8 @@ class Task extends React.Component {
                     {this.props.description}
                 </div>
                 <div className={css.options}>
-                    <Button size="small" type="edit" icon={<EditIcon stroke="#fff"/>}></Button>
-                    <Button size="small" type="delete" icon={<DeleteIcon fill="#fff"/>}></Button>
+                    <Button size="small" type="edit" icon={<EditIcon stroke="#fff"/>} onClick={this.props.onEdit}></Button>
+                    <Button size="small" type="delete" icon={<DeleteIcon fill="#fff"/>} onClick={this.props.onDelete}></Button>
                 </div>
             </li>
         )
