@@ -64,11 +64,12 @@ class TaskList extends React.Component {
   }
 
   handleSubmit(e) {
-    const { editing } = this.state;
+    const { editing, value } = this.state;
+    const { editTask } = this.props;
     e.persist();
     e.preventDefault();
-    if (editing) {
-      console.log("edit");
+    if (!!editing) {
+      editTask(editing, value)
     } else {
       console.log("add");
     }
