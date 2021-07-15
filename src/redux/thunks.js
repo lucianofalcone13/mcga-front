@@ -6,15 +6,17 @@ import {
   fetchTasksFulfilled,
   fetchTasksPending,
   fetchTasksRejected,
+  editTaskFulfilled,
+  editTaskRejected,
+  editTaskPending
 } from "./actions";
 
 export const addTask =
   (data) =>
-  async (dispatch, getState, { apiUrl }) => {
+  async (dispatch, _getState, { apiUrl }) => {
     try {
       dispatch(addTaskPending());
       const { data: response } = await axios.post(apiUrl, data);
-      console.log(response);
       if (response.success) {
         dispatch(addTaskFulfilled(response.list));
       } else {
@@ -31,7 +33,6 @@ export const fetchTasks =
     try {
       dispatch(fetchTasksPending());
       const { data: response } = await axios.get(`${apiUrl}/tasks`);
-      console.log({ response });
       if (response.success) {
         dispatch(fetchTasksFulfilled(response.data));
       } else {
@@ -39,5 +40,21 @@ export const fetchTasks =
       }
     } catch (error) {
       dispatch(fetchTasksRejected(error.message));
+    }
+  };
+
+export const editTask =
+  (id, value) =>
+  async (dispatch, _getState, { apiUrl }) => {
+    try {
+      dispatch(editTaskPending());
+      const { data: response } = await axios.put(`${apiUrl}/tasks/edit/${id}`, {id: id, description: value});
+      if (response.success) {
+        dispatch(editTaskFulfilled(response.data));
+      } else {
+        dispatch(editTaskRejected(response.message));
+      }
+    } catch (error) {
+      dispatch(editTaskRejected(error.message));
     }
   };
