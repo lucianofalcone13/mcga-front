@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import Button from "../../shared-components/button/button";
 import { TextField } from "../../shared-components/input/textField";
 import css from "./login.module.css";
 const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const history = useHistory();
   const handleChange = (event) => {
     event.persist();
     const value = event.target.value;
@@ -15,11 +17,16 @@ const Login = () => {
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    history.push("/tasks");
+  };
+
   const isButtonDisabled = () => !!!userEmail || !!!userPassword;
 
   return (
     <div className={css.container}>
-      <div className={css.wrapper}>
+      <form className={css.wrapper} onSubmit={handleSubmit}>
         <h1>SIGN IN</h1>
         <div className={css.inputsWrapper}>
           <TextField
@@ -39,7 +46,7 @@ const Login = () => {
         <Button type="submit" size="height" disabled={isButtonDisabled()}>
           Login
         </Button>
-      </div>
+      </form>
     </div>
   );
 };
