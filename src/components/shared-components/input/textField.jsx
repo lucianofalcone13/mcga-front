@@ -1,9 +1,9 @@
 import css from './textField.module.css'
-export const TextField = ({onChange, value, placeholder, disabled, label, required, inputRef}) => {
+export const TextField = ({onChange, value, placeholder, disabled, label, required, inputRef, type = "text", ...rest}) => {
     return (
         <div className={css.container}>
             <span className={css.label}>{label}</span>
-            <input ref={inputRef} className={css.input} value={value} onChange={onChange} placeholder={placeholder} disabled={disabled} required={required} />
+            <input type={type} ref={inputRef} className={css.input} value={value} onChange={onChange} placeholder={placeholder} disabled={disabled} required={required} {...rest} />
         </div>
     )
 }
