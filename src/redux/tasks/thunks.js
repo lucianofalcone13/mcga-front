@@ -15,11 +15,20 @@ import {
 } from "./actions";
 
 export const addTask =
-  (data) =>
-  async (dispatch, _getState, { apiUrl }) => {
+  (params) =>
+  async (dispatch, getState, { apiUrl }) => {
     try {
       dispatch(addTaskPending());
-      const { data: response } = await axios.post(`${apiUrl}/tasks/add`, data);
+      const authState = getState().auth;
+      const { data: response } = await axios.post(
+        `${apiUrl}/tasks/add`,
+        params,
+        {
+          headers: {
+            authorization: authState.jwt,
+          },
+        }
+      );
       if (response.success) {
         dispatch(addTaskFulfilled(response.data));
       } else {
@@ -32,10 +41,16 @@ export const addTask =
 
 export const fetchTasks =
   () =>
-  async (dispatch, _getState, { apiUrl }) => {
+  async (dispatch, getState, { apiUrl }) => {
     try {
       dispatch(fetchTasksPending());
-      const { data: response } = await axios.get(`${apiUrl}/tasks`);
+      const authState = getState().auth;
+      console.log(authState);
+      const { data: response } = await axios.get(`${apiUrl}/tasks`, {
+        headers: {
+          authorization: authState.jwt,
+        },
+      });
       if (response.success) {
         dispatch(fetchTasksFulfilled(response.data));
       } else {
@@ -48,13 +63,22 @@ export const fetchTasks =
 
 export const editTask =
   (id, value) =>
-  async (dispatch, _getState, { apiUrl }) => {
+  async (dispatch, getState, { apiUrl }) => {
     try {
       dispatch(editTaskPending());
-      const { data: response } = await axios.put(`${apiUrl}/tasks/edit/${id}`, {
-        id: id,
-        description: value,
-      });
+      const authState = getState().auth;
+      const { data: response } = await axios.put(
+        `${apiUrl}/tasks/edit/${id}`,
+        {
+          id: id,
+          description: value,
+        },
+        {
+          headers: {
+            authorization: authState.jwt,
+          },
+        }
+      );
       if (response.success) {
         dispatch(editTaskFulfilled(response.data));
       } else {
@@ -67,11 +91,15 @@ export const editTask =
 
 export const deleteTask =
   (id) =>
-  async (dispatch, _getState, { apiUrl }) => {
+  async (dispatch, getState, { apiUrl }) => {
     try {
       dispatch(deleteTaskPending());
-      console.log(`${apiUrl}/tasks/${id}`);
-      const { data: response } = await axios.delete(`${apiUrl}/tasks/${id}`);
+      const authState = getState().auth;
+      const { data: response } = await axios.delete(`${apiUrl}/tasks/${id}`, {
+        headers: {
+          authorization: authState.jwt,
+        },
+      });
       if (response.success) {
         dispatch(deleteTaskFulfilled(response.data));
       } else {

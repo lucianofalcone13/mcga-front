@@ -60,7 +60,6 @@ class TaskList extends React.Component {
             <Task
               onClick={() => this.handleTaskClick(_id)}
               key={_id}
-              id={_id}
               description={description}
               onDelete={() => this.handleDelete(_id)}
               onEdit={() => this.handleEdit(_id, description)}
@@ -84,8 +83,9 @@ class TaskList extends React.Component {
   handleSubmit(e) {
     const { editing, value } = this.state;
     const { addTask, editTask } = this.props;
-    e.persist();
+    // previene que recargue la pagina
     e.preventDefault();
+
     if (!!editing) {
       editTask(editing, value);
     } else {
@@ -111,14 +111,12 @@ class TaskList extends React.Component {
               required
             />
             <Button
-              style={{marginTop: '1px'}}
+              style={{ marginTop: "1px" }}
               type="submit"
               size="small"
               disabled={!!!value}
               icon={editing ? <CheckmarkIcon /> : <AddIcon />}
-            >
-              {editing ? "EDIT" : "ADD"}
-            </Button>
+            />
           </form>
           {this.renderList()}
         </div>

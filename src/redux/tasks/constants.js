@@ -13,5 +13,3 @@ export const EDIT_TASK_REJECTED = 'EDIT_TASK_REJECTED'
 export const DELETE_TASK_PENDING = 'DELETE_TASK_PENDING'
 export const DELETE_TASK_FULFILLED = 'DELETE_TASK_FULFILLED'
 export const DELETE_TASK_REJECTED = 'DELETE_TASK_REJECTED'
-
-export const apiUrl = "http://localhost:5000/api";

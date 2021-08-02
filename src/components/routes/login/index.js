@@ -1,3 +1,19 @@
-import Login from './login'
+import Login from "./login";
+import { login } from "../../../redux/auth/thunks";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-export default Login
+const mapStateToProps = (state) => ({
+  isLoading: state.auth.isLoading,
+  loginError: state.auth.error,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      login,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -4,8 +4,9 @@ import TaskList from "./components/routes/taskList";
 import { store } from "./redux/store";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Login from "./components/routes/login";
-import './assets/fonts/Roboto-Regular.ttf'
-import './assets/fonts/Roboto-Bold.ttf'
+import "./assets/fonts/Roboto-Regular.ttf";
+import "./assets/fonts/Roboto-Bold.ttf";
+import PrivateRoute from "./helpers/privateRoute";
 
 function App() {
   return (
@@ -15,9 +16,7 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/tasks">
-            <TaskList />
-          </Route>
+          <PrivateRoute exact path="/tasks" component={TaskList} />
           <Redirect to="/login" />
         </Switch>
       </BrowserRouter>
