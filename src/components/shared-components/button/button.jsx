@@ -1,15 +1,7 @@
 import React from "react";
 import css from "./button.module.css";
 
-const Button = ({
-  onClick,
-  type,
-  icon,
-  children,
-  size,
-  disabled,
-  style,
-}) => {
+const Button = ({ onClick, type, icon, children, size, disabled, style }) => {
   return (
     <button
       style={style}
@@ -17,11 +9,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {icon ? (
-        <div className={css.icon}>{icon}</div>
-      ) : (
-        children
-      )}
+      {icon ? <div className={css.icon}>{icon}</div> : children}
     </button>
   );
 };

@@ -2,18 +2,19 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { mapError } from "../../../helpers/error-format";
 import { isValidEmail } from "../../../helpers/validations";
+import { LOGIN_FULFILLED } from "../../../redux/auth/constants";
 import Button from "../../shared-components/button/button";
 import { TextField } from "../../shared-components/input/textField";
 import { ErrorLabel } from "../../shared-components/label/errorLabel";
 import css from "./login.module.css";
 
-const Login = () => {
+const Login = ({ login, isLoading, loginError }) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [error, setError] = useState("");
-  const history = useHistory();
+  let history = useHistory();
   const handleChange = (event) => {
     event.persist();
     const value = event.target.value;
@@ -44,19 +45,23 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    history.push("/tasks");
+    const response = await login({ email: userEmail, password: userPassword });
+    console.log(response);
+    if (response.type === LOGIN_FULFILLED) {
+      history.push("/tasks");
+    }
   };
 
   useEffect(() => {
-    if (wasInputFocused() && (!!!userEmail || !!!userPassword)) {
+    if (wasInputFocused && (!!!userEmail || !!!userPassword)) {
       setError("Incompleted");
     }
   }, [error, userEmail, userPassword, emailFocused, passwordFocused]);
 
-  const isButtonDisabled = () => !!!userEmail || !!!userPassword || error;
-  const wasInputFocused = () => emailFocused && passwordFocused;
+  const isButtonDisabled = !!!userEmail || !!!userPassword || error;
+  const wasInputFocused = emailFocused && passwordFocused;
 
   return (
     <div className={css.container}>
@@ -77,10 +82,16 @@ const Login = () => {
             name="password"
             onBlur={handleBlur}
           />
-          <ErrorLabel message={mapError[error]} />
+          <br />
+          <ErrorLabel message={mapError[error] || loginError} />
+          <br />
         </div>
-        <Button type="submit" size="height" disabled={isButtonDisabled()}>
-          Login
+        <Button
+          type="submit"
+          size="height"
+          disabled={isButtonDisabled || isLoading}
+        >
+          {!isLoading ? "Login" : "Loading..."}
         </Button>
       </form>
     </div>

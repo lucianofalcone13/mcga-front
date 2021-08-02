@@ -36,38 +36,38 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
         list: [...state.list, action.payload],
       };
     case DELETE_TASK_FULFILLED:
-      const idx = state.list.findIndex((t) => t._id === action.payload._id)
-      const updatedList = [...state.list]
+      const idx = state.list.findIndex((t) => t._id === action.payload._id);
       if (idx !== -1) {
-        updatedList.splice(idx, 1)
+        const updatedList = [...state.list];
+        updatedList.splice(idx, 1);
         return {
           ...state,
           isLoading: false,
-          list: updatedList
+          list: updatedList,
         };
       } else {
         return {
           ...state,
           isLoading: false,
-          error: `An error has occurred while removing the task: ${action.payload._id}`
-        }
+          error: `An error has occurred while removing the task: ${action.payload._id}`,
+        };
       }
     case EDIT_TASK_FULFILLED:
-      const index = state.list.findIndex((t) => t._id === action.payload._id)
-      const editedList = [...state.list]
+      const index = state.list.findIndex((t) => t._id === action.payload._id);
       if (index !== -1) {
-        editedList.splice(index, 1, {...action.payload})
+        const editedList = [...state.list];
+        editedList.splice(index, 1, action.payload);
         return {
           ...state,
           isLoading: false,
-          list: editedList
+          list: editedList,
         };
       } else {
         return {
           ...state,
           isLoading: false,
-          error: `An error has occurred while editing the task: ${action.payload._id}`
-        }
+          error: `An error has occurred while editing the task: ${action.payload._id}`,
+        };
       }
     case FETCH_TASKS_FULFILLED:
       return {
