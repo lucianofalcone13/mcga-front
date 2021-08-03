@@ -6,7 +6,15 @@ export const login =
   async (dispatch, _getState, { apiUrl }) => {
     try {
       dispatch(loginPending());
-      const { data: response } = await axios.post(`${apiUrl}/auth/login`, data);
+      const { data: response } = await axios.post(
+        `${apiUrl}/auth/login`,
+        data,
+        {
+          headers: {
+            ["Access-Control-Allow-Origin"]: "*",
+          },
+        }
+      );
       if (response.success) {
         return dispatch(loginFulfilled(response.data));
       } else {
